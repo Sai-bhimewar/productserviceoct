@@ -1,6 +1,8 @@
 package com.scaler.productservice.services;
 
+import com.scaler.productservice.models.Product;
+
 public interface ProductService {
 
-    public void getProductDetails(Long id);
+    public Product getProductDetails(Long id);
 }
