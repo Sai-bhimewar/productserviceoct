@@ -9,6 +9,9 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class FakeStoreProductService implements ProductService{
 
@@ -47,5 +50,15 @@ public class FakeStoreProductService implements ProductService{
         FakeStoreProductDto responseDto=
         restTemplate.postForObject("https://fakestoreapi.com/products",requestDto, FakeStoreProductDto.class);
         return responseDto.toProduct();
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        FakeStoreProductDto[] responseDt0= restTemplate.getForObject("https://fakestoreapi.com/products", FakeStoreProductDto[].class);
+        List<Product> products = new ArrayList<>();
+        for(FakeStoreProductDto productDto:responseDt0) {
+            products.add(productDto.toProduct());
+        }
+        return products;
     }
 }
