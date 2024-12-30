@@ -4,8 +4,11 @@ import com.scaler.productservice.dtos.FakeStoreCreateProductDto;
 import com.scaler.productservice.dtos.FakeStoreProductDto;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,6 +39,11 @@ public class FakeStoreProductService implements ProductService{
         product.setCategory(category);
 
         return product;
+//        ResponseEntity<FakeStoreProductDto> responseDto= restTemplate.getForEntity("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+//        if(responseDto.getStatusCode()== HttpStatusCode.valueOf(404)){}
+//        else if(responseDto.getStatusCode()== HttpStatusCode.valueOf(500)){
+//        }
+//        return responseDto.getBody().toProduct();
     }
 
     @Override
