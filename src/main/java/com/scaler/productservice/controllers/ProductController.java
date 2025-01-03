@@ -1,5 +1,6 @@
 package com.scaler.productservice.controllers;
 
+import com.scaler.productservice.dtos.ErrorDto;
 import com.scaler.productservice.dtos.FakeStoreCreateProductDto;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.ProductService;
@@ -36,5 +37,13 @@ public class ProductController {
         return productService.CreateProduct(requestDto.getTitle(), requestDto.getDescription(), requestDto.getPrice(), requestDto.getCategory(), requestDto.getImage());
 //        Product product=productService.CreateProduct(requestDto.getTitle(), requestDto.getDescription(), requestDto.getPrice(), requestDto.getCategory(), requestDto.getImage());
 //        return new ResponseEntity<>(product, HttpStatusCode.valueOf(401));
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ErrorDto> NPEHandler() {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage("NPE");
+        ResponseEntity<ErrorDto> response = new ResponseEntity<>(errorDto, HttpStatus.valueOf(401));
+        return response;
     }
 }
