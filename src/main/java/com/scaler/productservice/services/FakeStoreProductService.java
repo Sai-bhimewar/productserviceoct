@@ -2,11 +2,8 @@ package com.scaler.productservice.services;
 
 import com.scaler.productservice.dtos.FakeStoreCreateProductDto;
 import com.scaler.productservice.dtos.FakeStoreProductDto;
-import com.scaler.productservice.models.Category;
+import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Product;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,25 +22,28 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public Product getProductDetails(Long id ) {
+    public Product getProductDetails(Long id ) throws ProductNotFoundException {
 
-        FakeStoreProductDto responseDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
-        Product product = new Product();
-        product.setId(responseDto.getId());
-        product.setTitle(responseDto.getName());
-        product.setDescription(responseDto.getDescription());
-        product.setPrice(Double.parseDouble(responseDto.getPrice()));
-        product.setImageUrl(responseDto.getImage());
-        Category category = new Category();
-        category.setName(responseDto.getCategory());
-        product.setCategory(category);
-
-        return product;
-//        ResponseEntity<FakeStoreProductDto> responseDto= restTemplate.getForEntity("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
-//        if(responseDto.getStatusCode()== HttpStatusCode.valueOf(404)){}
-//        else if(responseDto.getStatusCode()== HttpStatusCode.valueOf(500)){
-//        }
-//        return responseDto.getBody().toProduct();
+//        FakeStoreProductDto responseDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+//        Product product = new Product();
+//        product.setId(responseDto.getId());
+//        product.setTitle(responseDto.getName());
+//        product.setDescription(responseDto.getDescription());
+//        product.setPrice(Double.parseDouble(responseDto.getPrice()));
+//        product.setImageUrl(responseDto.getImage());
+//        Category category = new Category();
+//        category.setName(responseDto.getCategory());
+//        product.setCategory(category);
+//
+//        return product;
+        ResponseEntity<FakeStoreProductDto> responseDto= restTemplate.getForEntity("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+        if(responseDto.getStatusCode()== HttpStatusCode.valueOf(404)){}
+        else if(responseDto.getStatusCode()== HttpStatusCode.valueOf(500)){
+        }
+        if(responseDto.getBody()==null){
+            throw new ProductNotFoundException("Product not found yet again");
+        }
+        return responseDto.getBody().toProduct();
     }
 
     @Override
