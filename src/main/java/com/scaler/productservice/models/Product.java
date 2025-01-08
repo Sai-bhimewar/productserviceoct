@@ -1,12 +1,17 @@
 package com.scaler.productservice.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 
-public class Product {
+@Entity
+public class Product extends BaseModel{
     private Long id;
     private String title;
     private String description;
     private double price;
     private String imageUrl;
+
+    @ManyToOne
     private Category category;
 
     public void setId(Long id) {
