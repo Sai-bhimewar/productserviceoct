@@ -1,5 +1,6 @@
 package com.scaler.productservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
@@ -7,17 +8,11 @@ import java.util.List;
 
 @Entity
 public class Category extends BaseModel {
-    private Long id;
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Product> products;
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
     public String getName() {
         return name;
     }

@@ -5,7 +5,6 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Product extends BaseModel{
-    private Long id;
     private String title;
     private String description;
     private double price;
@@ -14,12 +13,6 @@ public class Product extends BaseModel{
     @ManyToOne
     private Category category;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public Long getId() {
-        return id;
-    }
     public void setTitle(String title) {
         this.title = title;
     }

@@ -8,6 +8,7 @@ import com.scaler.productservice.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("databaseProductService")
 public class DatabaseProductService implements ProductService {
@@ -21,7 +22,13 @@ public class DatabaseProductService implements ProductService {
 
     @Override
     public Product getProductDetails(Long id) throws ProductNotFoundException {
-        return null;
+        Optional<Product> optionalProductFromDatabse = productRepository.findById(id);
+        if(optionalProductFromDatabse.isEmpty()) {
+            //throw new ProductNotFoundException("Product not found");
+            return null;
+        }
+        Product product=optionalProductFromDatabse.get();
+        return product;
     }
 
     @Override
@@ -43,6 +50,6 @@ public class DatabaseProductService implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        return productRepository.findAll();
     }
 }
