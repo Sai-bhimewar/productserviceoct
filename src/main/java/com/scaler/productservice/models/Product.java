@@ -13,6 +13,7 @@ public class Product extends BaseModel{
     @ManyToOne
     private Category category;
 
+
     public void setTitle(String title) {
         this.title = title;
     }
